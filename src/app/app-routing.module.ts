@@ -2,10 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminUsuarioComponent } from './pages/admin-usuario/admin-usuario.component';
 import { HomeComponent } from './pages/home/home.component';
+import { UsuarioComponent } from './pages/usuario/usuario.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: 'usuario/:id', component: AdminUsuarioComponent},
+  {path: 'buscar', component: HomeComponent},
+  {path: 'usuario/:usuario', component: UsuarioComponent},
+  {path: 'usuario-admin/:id', component: AdminUsuarioComponent},
   {path: '**', component: HomeComponent}
 ];
 

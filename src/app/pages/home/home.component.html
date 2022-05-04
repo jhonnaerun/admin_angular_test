@@ -1,74 +1,32 @@
-<div class="row animated fadeIn">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <input #input (keyup)="buscarUsuario(input.value)" type="text" class="form-control" placeholder="Buscar">
-            </div>
-        </div>
-    </div>
-</div>
+<div class="limiter animated fadeInLeft">
+    <div class="container-login100">
+        <div class="wrap-login100 p-t-50 p-b-90">
+            <form #usuarioForm=ngForm (ngSubmit)="buscar(usuarioForm)" class="login100-form validate-form flex-sb flex-w">
 
-<div class="row animated fadeIn" *ngIf="cargando">
-    <div class="col-sm-12">
-        <div class="alert alert-warnign text-center">
-            <strong>Cargando</strong>
-            <br>
-            <i class="fa fa-refresh fa-spin fa-2x"></i>
-            <br>
-            <span>Un momento por favor</span>
-        </div>
-    </div>
-</div>
-<br>
-<div class="row animated fadeIn">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        <h3 class="card-title"> Usuarios registrados (<small>{{totalRegistros}}</small>)</h3>
-                    </div>
-                    <div class="col-6" style="text-align: right;">
-                        <button (click)="crearUsuario()" class="btn btn-primary">
-                            <i class="fa fa-plus"> Crear Usuario</i>
-                        </button>
-                    </div>
+                <span class="login100-form-title p-b-51">
+                    Registro de Usuarios
+                </span>
+
+                <span style="color: darkblue;">Tipo de documento</span>
+                <div class="wrap-input100 m-b-16">
+                    <select class="input100" name="tipo" [(ngModel)]="usuario.tipo">
+                        <option *ngFor="let documento of tiposDocumento" [value]="documento.id">{{documento.nombre}}</option>
+                      </select>
                 </div>
-                <table class="table table-hover">
-                    <thead>
-                        <th style="text-align: center;">ID</th>
-                        <th style="text-align: center;">Nombre</th>
-                        <th style="text-align: center;">Rol</th>
-                        <th style="text-align: center;">Estado</th>
-                        <th style="text-align: center;">Opciones</th>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let usuario of usuarios">
-                            <td style="text-align: center;">{{usuario.id}}</td>
-                            <td style="text-align: center;">
-                                {{usuario.nombre}}
-                            </td>
-                            <td style="text-align: center;">
-                                {{usuario.rol.nombre}}
-                            </td>
-                            <td style="text-align: center;">
-                                <label *ngIf="usuario.activo" class="label label-info">Activo</label>
-                                <label *ngIf="!usuario.activo" class="label label-danger">Inactivo</label>
-                            </td>
-                            <td style="text-align: center;">
-                                <button (click)="actualizarUsuario(usuario.id)" class="btn btn-primary" style="margin-right: 2px;">
-                                    <i class="fa fa-pencil"></i>
-                                </button>
+                <span style="color: darkblue;">Numero de documento</span>
+                <div class="wrap-input100 m-b-16">
+                    <input name="id" class="input100" type="text" [(ngModel)]="usuario.id" required>
+                    <span class="focus-input100"></span>
+                </div>
 
-                                <button (click)="eliminarUsuario(usuario)" class="btn btn-danger">
-                                    <i class="fa fa-trash-o"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button (click)="atrasPagina()" class="btn btn-secondary" style="margin-right: 5px;">Anteriores</button>
-                <button (click)="adelantarPagina()" class="btn btn-secondary">Siguientes</button>
+                <div class="container-login100-form-btn m-t-17">
+                    <button class="login100-form-btn" type="submit" style="border-radius: 30px; background-color: darkblue;">
+                        Buscar
+                    </button>
+                </div>
+            </form>
+            <div style="text-align: center;">
+                <button type="button" class="btn btn-link" (click)="crearUsuario()">Crear Usuario</button>
             </div>
         </div>
     </div>

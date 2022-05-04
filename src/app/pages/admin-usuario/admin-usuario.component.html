@@ -7,7 +7,19 @@
                 <h6 class="card-subtitle">{{btnText}} información</h6>
 
                 <form class="form-horizontal p-t-20" [formGroup]="usuarioForm" (submit)="accionUsuario()">
-
+                    <div class="form-group row">
+                        <label for="exampleInputEmail3" class="col-sm-3 control-label">Tipo</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <select class="form-control form-select" formControlName="tipo">
+                                    <option *ngFor="let documento of tiposDocumento"
+                                        [value]="documento.id">
+                                        {{ documento.nombre }}
+                                    </option>
+                                  </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <label for="exampleInputuname3" class="col-sm-3 control-label">Id</label>
                         <div class="col-sm-9">
@@ -17,56 +29,79 @@
                             </div>
                         </div>
                     </div>
-                    <br>
                     <div class="form-group row">
-                        <label for="exampleInputuname3" class="col-sm-3 control-label">Nombre</label>
+                        <label for="exampleInputuname3" class="col-sm-3 control-label">Primer Nombre</label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <div class="input-group-addon"><i class="ti-user"></i></div>
-                                <input type="text" formControlName="nombre" class="form-control" id="exampleInputuname3" placeholder="Nombre del usuario">
+                                <input type="text" formControlName="primerNombre" class="form-control" id="exampleInputuname3" placeholder="Primer Nombre">
                             </div>
                         </div>
                     </div>
-                    <br>
                     <div class="form-group row">
-                        <label for="exampleInputEmail3" class="col-sm-3 control-label">Rol</label>
+                        <label for="exampleInputuname3" class="col-sm-3 control-label">Segundo Nombre</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <select class="form-control form-select" formControlName="rol">
-                                    <option value="">Seleccione un rol</option>
-                                    <option *ngFor="let rol of roles"
-                                        [value]="rol.id">
-                                        {{ rol.nombre }}
-                                    </option>
-                                  </select>
+                                <div class="input-group-addon"><i class="ti-user"></i></div>
+                                <input type="text" formControlName="segundoNombre" class="form-control" id="exampleInputuname3" placeholder="Segundo Nombre">
                             </div>
                         </div>
                     </div>
-                    <br>
                     <div class="form-group row">
-                        <label for="exampleInputEmail3" class="col-sm-3 control-label">Estado</label>
+                        <label for="exampleInputuname3" class="col-sm-3 control-label">Primer Apellido</label>
                         <div class="col-sm-9">
                             <div class="input-group">
-                                <select class="form-control form-select" formControlName="activo">
-                                    <option value="">Seleccione un estado</option>
-                                    <option *ngFor="let estado of estados"
-                                        [value]="estado.activo">
-                                        {{ estado.nombre }}
-                                    </option>
-                                  </select>
+                                <div class="input-group-addon"><i class="ti-user"></i></div>
+                                <input type="text" formControlName="primerApellido" class="form-control" id="exampleInputuname3" placeholder="Primer Apellido">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputuname3" class="col-sm-3 control-label">Segundo Apellido</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-user"></i></div>
+                                <input type="text" formControlName="segundoApellido" class="form-control" id="exampleInputuname3" placeholder="Segundo Apellido">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputuname3" class="col-sm-3 control-label">Teléfono</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-user"></i></div>
+                                <input type="text" formControlName="telefono" class="form-control" id="exampleInputuname3" placeholder="Teléfono">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputuname3" class="col-sm-3 control-label">Ciudad</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-user"></i></div>
+                                <input type="text" formControlName="ciudad" class="form-control" id="exampleInputuname3" placeholder="Ciudad">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputuname3" class="col-sm-3 control-label">Dirección</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="ti-user"></i></div>
+                                <input type="text" formControlName="direccion" class="form-control" id="exampleInputuname3" placeholder="Dirección">
                             </div>
                         </div>
                     </div>
                     <br>
                     <div class="form-group row">
                         <div class="col-6" style="text-align: right;">
-                            <button type="submit" [disabled]="usuarioForm.invalid" class="btn btn-primary waves-effect waves-light">
+                            <button type="submit" [disabled]="usuarioForm.invalid" class="btn waves-effect waves-light" style="background-color: darkblue;color: white;border-radius: 30px;">
                                 <i class="fa fa-save"></i>
                                 {{btnText}}
                             </button>
                         </div>
                         <div class="col-6">
-                            <button (click)="cancelar()" class="btn btn-dark waves-effect waves-light">
+                            <button (click)="cancelar()" class="btn btn-dark waves-effect waves-light" style="border-radius: 30px;">
                                 Cancelar
                             </button>
                         </div>

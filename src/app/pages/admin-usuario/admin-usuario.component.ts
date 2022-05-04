@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Rol } from 'src/app/interfaces/usuario';
+import { Tipo, Usuario } from 'src/app/interfaces/usuario';
 import { AlertService } from 'src/app/services/alert.service';
-import { RolService } from 'src/app/services/rol.service';
+import { TipoDocumentoService } from 'src/app/services/tipoDocumento.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
@@ -15,58 +15,65 @@ export class AdminUsuarioComponent implements OnInit {
   public usuarioForm: FormGroup;
   public btnText: string = '';
   private id: string = '';
-  public roles: Rol[] = [];
-  public estados = [{activo: true, nombre: 'Activo'},{activo: false, nombre: 'inactivo'}];
+  public tiposDocumento: Tipo[] = [];
+  private usuario: Usuario;
+  private estado;
   
   constructor(private form: FormBuilder,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private usuarioServices: UsuarioService,
-              private rolServices: RolService,
+              private tipoService: TipoDocumentoService,
               private alert: AlertService) {
 
     this.usuarioForm = this.form.group({
-      id: [{value: '', disabled: true},  ],
-      nombre: ['', Validators.required],
-      rol: ['', Validators.required ],
-      activo: [ true , Validators.required ],
+      id: ['',  ],
+      primerNombre: ['', Validators.required],
+      tipo: ['', Validators.required],
+      segundoNombre: ['', ],
+      primerApellido: ['', Validators.required],
+      segundoApellido: ['', ],
+      ciudad: ['', Validators.required ],
+      direccion: ['', ],
+      telefono: ['', Validators.required ],
     });
 
   }
 
   ngOnInit(): void {
-    this.obtenerRoles();
-
+    this.getTipoDocumentos();
     this.activatedRoute.params.subscribe(({id}) => {
       if(id !== 'crear') {
         this.id = id;
-        this.obtenerUsuario(id);
+        this.obtenerUsuario();
       } else {
         this.btnText = 'Guardar';
       }
     });
   }
 
-  public obtenerRoles() {
-    this.rolServices.getRoles().subscribe((resp: any) => {
-      if(resp.length !== 0) {
-        this.roles = resp;
-        console.log(this.roles);
-      }
-    }, error => {
-      this.alert.showAlert('Listar Roles',error.error, 'error');
+  public getTipoDocumentos() {
+    this.tipoService.getTipoDocumentos().subscribe((documentos: any) => {
+      this.tiposDocumento = documentos;
     });
   }
 
-  public obtenerUsuario(id: string) {
-    this.usuarioServices.ObtenerUsuarioById(id).subscribe((resp: any) => {
+  public obtenerUsuario() {
+    this.usuarioServices.ObtenerUsuarioById(this.id).subscribe((resp: any) => {
+      console.log(resp);
       if(resp) {
         this.usuarioForm.setValue({
           id: resp.id,
-          nombre: resp.nombre,
-          rol: resp.rol.id,
-          activo: resp.activo,
+          primerNombre: resp.primerNombre,
+          tipo: resp.tipo.id,
+          segundoNombre: resp.segundoNombre,
+          primerApellido: resp.primerApellido,
+          segundoApellido: resp.segundoApellido,
+          ciudad: resp.ciudad,
+          direccion: resp.direccion,
+          telefono: resp.telefono,
         });
+        this.usuario = resp;
         this.btnText = 'Actualizar';
       } else {
         this.alert.showAlert('Usuario','No existe el usuario', 'error');
@@ -91,42 +98,50 @@ export class AdminUsuarioComponent implements OnInit {
   }
 
   public guardarUsuario() {
-    const usuario = {
-      nombre: this.usuarioForm.value.nombre,
-      rol: {id: this.usuarioForm.value.rol},
-      activo: this.usuarioForm.value.activo,
-    }
-    this.usuarioServices.GuardarUsuario(usuario).subscribe((resp: any) => {
+    const tipo: any = this.tiposDocumento.filter(documento => documento.id.toString() === this.usuarioForm.value.tipo);
+    this.setUsuario(tipo.nombre);
+    this.usuarioServices.GuardarUsuario(this.usuario).subscribe((resp: any) => {
         this.alert.showAlert('Crear Usuario', 'Registro creado', 'success');
-        this.usuarioForm.setValue({
-          id: resp.id,
-          nombre: resp.nombre,
-          rol: resp.rol.id,
-          activo: resp.activo,
-        });
-        this.router.navigate(['/home']);
+        this.usuario = resp;
+        this.router.navigate(['/usuario', JSON.stringify(this.usuario)]);
     }, error => {
       this.alert.showAlert('Crear Usuario', error.error, 'error');
     });
   }
 
   public actualizarUsuario() {
-    const usuario = {
-      id: this.id,
-      nombre: this.usuarioForm.value.nombre,
-      rol: {id: this.usuarioForm.value.rol},
-      activo: this.usuarioForm.value.activo,
-    }
-    console.log(usuario);debugger
-    this.usuarioServices.GuardarUsuario(usuario).subscribe((resp: any) => {
+    this.setUsuario();
+    this.usuarioServices.GuardarUsuario(this.usuario).subscribe((resp: any) => {
+        this.usuario = resp;
         this.alert.showAlert('Actualizar usuario', 'Registro Actualizado', 'success');
     }, error => {
       this.alert.showAlert('Actualizar usuario', error.error, 'error');
     });
   }
 
+  public setUsuario(nombre?: string) {
+    this.usuario = {
+      id: this.usuarioForm.value.id,
+      primerNombre: this.usuarioForm.value.primerNombre,
+      tipo: {
+        id: this.usuarioForm.value.tipo,
+        nombre: nombre
+      },
+      segundoNombre: this.usuarioForm.value.segundoNombre,
+      primerApellido: this.usuarioForm.value.primerApellido,
+      segundoApellido: this.usuarioForm.value.segundoApellido,
+      ciudad: this.usuarioForm.value.ciudad,
+      direccion: this.usuarioForm.value.direccion,
+      telefono: this.usuarioForm.value.telefono,
+    }
+  }
+
   public cancelar() {
-    this.router.navigate(['/home']);
+    if(this.btnText === 'Actualizar') {
+      this.router.navigate(['/usuario', JSON.stringify(this.usuario)]);
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
 
 }

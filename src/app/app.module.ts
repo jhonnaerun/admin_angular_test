@@ -6,16 +6,19 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AdminUsuarioComponent } from './pages/admin-usuario/admin-usuario.component';
 import {HttpClientModule} from '@angular/common/http'
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UsuarioComponent } from './pages/usuario/usuario.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    AdminUsuarioComponent
+    AdminUsuarioComponent,
+    UsuarioComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule

@@ -1,0 +1,73 @@
+<!-- <div class="row animated fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input #input (keyup)="buscarUsuario(input.value)" type="text" class="form-control" placeholder="Buscar">
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="container">
+
+    <button class="btn" (click)="buscar()" style="background-color: darkblue;color: white; border-radius: 30px;">Realizar Busqueda</button>
+    <br>
+    <br>
+    <div class="row animated fadeIn" *ngIf="cargando">
+        <div class="col-sm-12">
+            <div class="alert alert-warnign text-center">
+                <strong>Cargando</strong>
+                <br>
+                <i class="fa fa-refresh fa-spin fa-2x"></i>
+                <br>
+                <span>Un momento por favor</span>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row animated fadeIn">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead style="background-color: darkblue; color: white; align-items: center;">
+                            <th style="text-align: center;">Tipo Documento</th>
+                            <th style="text-align: center;">Cédula</th>
+                            <th style="text-align: center;">Nombre</th>
+                            <th style="text-align: center;">Primer Apellido</th>
+                            <th style="text-align: center;">Segundo Apellido</th>
+                            <th style="text-align: center;">Ciudad</th>
+                            <th style="text-align: center;">Dirección</th>
+                            <th style="text-align: center;">Telefono</th>
+                            <th style="text-align: center;">Opciones</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;">
+                                    {{usuario.tipo.nombre}}
+                                </td>
+                                <td style="text-align: center;">{{usuario.id}}</td>
+                                <td style="text-align: center;">
+                                    {{usuario.primerNombre}} {{usuario.segundoNombre}}
+                                </td>
+                                <td style="text-align: center;">{{usuario.primerApellido}}</td>
+                                <td style="text-align: center;">{{usuario.segundoApellido}}</td>
+                                <td style="text-align: center;">{{usuario.ciudad}}</td>
+                                <td style="text-align: center;">{{usuario.direccion}}</td>
+                                <td style="text-align: center;">{{usuario.telefono}}</td>
+                                <td style="text-align: center;">
+                                    <button (click)="actualizarUsuario(usuario.id)" class="btn" style="margin-right: 2px; background-color: darkblue;color: white;">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+
+                                    <button (click)="eliminarUsuario()" class="btn btn-danger" style="margin-top: 2px;margin-right: 2px;">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -27,7 +27,7 @@ export class UsuarioService {
   }
   
 
-  public eliminarUsuario(id: string){
+  public eliminarUsuario(id: number){
     return this.http.post(`${this.url}/usuario/${id}`, null);
   }
 }
